@@ -18,7 +18,8 @@ local group = display.newGroup()
 local todoBtn
 
 function scene:createScene( event )
-	local background = display.newImage(group,"image/1.jpg",_RW/2,_RH/2,true)
+	local background = display.newImage(group,"image/home.jpeg",_RW/2,_RH/2)
+	background:scale(1,2)
 
 	-- todoページへ移動
 	todoBtn = widget.newButton
@@ -33,8 +34,8 @@ function scene:createScene( event )
 	    onEvent = function( event ) storyboard.gotoScene("todo",{ effect = "crossFade" , time = 2000 }) end
 
 	}
-	todoBtn.x , todoBtn.y = _RW/2 , _RH/3
-	todoBtn.alpha = 0.7
+	todoBtn.x , todoBtn.y = _RW/2 - 150 , _RH-420
+	todoBtn.alpha = 0.9
 	group:insert(todoBtn)
 end
 

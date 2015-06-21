@@ -13,11 +13,17 @@ module(...,package.seeall)
 -- Library
 local widget = require("widget")
 
+-- Model
+local todo_model = require("todo_model")
+local model = todo_model.new()
+
 local function listener()
 
     local self = {}
 
-    function self.createTask()
+    function self.createTask(image)
+
+        assert(image,"image does not exist!")
 
         -- 全体セル
         local taskGroup = display.newGroup()
@@ -34,7 +40,7 @@ local function listener()
 
         -- todoを入力するセル作成
         local todoCellGroup = display.newGroup()
-        local todoCell = display.newImage(todoCellGroup,"image/todo1.png",300,400,true)
+        local todoCell = display.newImage(todoCellGroup,image,300,400,true)
         todoCell.width = 500 ; todoCell.height = 200
         todoText = display.newText(todoCellGroup,getText,0,0,system.nativeFont,30)
         todoText:setFillColor(0)
@@ -62,9 +68,8 @@ local function listener()
                 print( event.text )
                 native.setKeyboardFocus( nil )
             end
+
         end
-
-
 
         -- 入力を可能にする
         local textBox = native.newTextBox( 0, 0, 300, 100 )
@@ -88,19 +93,26 @@ local function listener()
 
             local function saveListener( event )
 
-                -- テキストボックスを透明にする
-                textBox.isEditable = false
-                textBox.isVisible = false
-                textBox.isHitTestable = false
+                if event.phase == "ended" then
 
-                -- 保存されたテキスト表示
-                display.remove(todoText)
-                todoText = nil
-                todoText = display.newText(cellGroup , getText , 0 , 0 , system.nativeFont , 30)
-                todoText.x , todoText.y = todoCell.x , todoCell.y
-                todoText:setFillColor(0)
+                    -- テキストボックスを透明にする
+                    textBox.isEditable = false
+                    textBox.isVisible = false
+                    textBox.isHitTestable = false
 
-                print("-------- To do save --------------")
+                    -- 保存されたテキスト表示
+                    display.remove(todoText)
+                    todoText = nil
+                    todoText = display.newText(cellGroup , getText , 0 , 0 , system.nativeFont , 30)
+                    todoText.x , todoText.y = todoCell.x , todoCell.y
+                    todoText:setFillColor(0)
+
+                    -- todoをデータベースへ投稿
+                    model.postTodo(getText)
+
+                    print("-------- To do save --------------")
+
+                end
             end
             
 
