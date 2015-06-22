@@ -42,42 +42,70 @@ local function listener()
         local todoCellGroup = display.newGroup()
         local todoCell = display.newImage(todoCellGroup,image,300,400,true)
         todoCell.width = 500 ; todoCell.height = 200
+        todoCell.alpha = 1
         todoText = display.newText(todoCellGroup,getText,0,0,system.nativeFont,30)
         todoText:setFillColor(0)
         todoText.x , todoText.y = todoCell.x , todoCell.y
 
-        -- 文字挿入
-        local function inputListener( event )
+        -- -- 文字挿入
+        -- local function inputListener( event )
 
-            if event.phase == "began" then
-                -- user begins editing textBox
+        --     if event.phase == "began" then
+        --         -- user begins editing textBox
+        --         print( event.text )
+        --         native.setKeyboardFocus( nil )
+
+        --     elseif event.phase == "ended" then
+        --         -- do something with textBox text
+        --         print( event.target.text )
+        --         getText = nil
+        --         getText = event.target.text
+        --         native.setKeyboardFocus( event.target )
+
+        --     elseif event.phase == "editing" then
+        --         print( event.newCharacters )
+        --         print( event.oldText )
+        --         print( event.startPosition )
+        --         print( event.text )
+        --         native.setKeyboardFocus( nil )
+        --     end
+
+        -- end
+
+        -- -- 入力を可能にする
+        -- local textBox = native.newTextField( _W/2, 0, _W, 200 )
+        -- textBox.y = 700
+        -- textBox.text = ""
+        -- textBox.isVisible = false
+        -- textBox.isEditable = false
+        -- textBox:addEventListener( "userInput", inputListener )
+
+        local function textListener( event )
+
+            if ( event.phase == "began" ) then
+                -- user begins editing defaultField
                 print( event.text )
-                native.setKeyboardFocus( nil )
 
-            elseif event.phase == "ended" then
-                -- do something with textBox text
+            elseif ( event.phase == "ended" or event.phase == "submitted" ) then
+                -- do something with defaultField text
                 print( event.target.text )
                 getText = nil
                 getText = event.target.text
-                native.setKeyboardFocus( event.target )
 
-            elseif event.phase == "editing" then
+            elseif ( event.phase == "editing" ) then
                 print( event.newCharacters )
                 print( event.oldText )
                 print( event.startPosition )
                 print( event.text )
-                native.setKeyboardFocus( nil )
             end
-
         end
-
         -- 入力を可能にする
-        local textBox = native.newTextBox( 0, 0, 300, 100 )
-        textBox.x , textBox.y = todoCell.x , todoCell.y
-        textBox.text = "Todoを入力しよう"
-        textBox.isVisible = false
-        textBox.isEditable = false
-        textBox:addEventListener( "userInput", inputListener )
+        local textField = native.newTextField( _W/2, _H-300, _W, 100 )
+        textField.y = 700
+        textField.text = ""
+        textField.isVisible = false
+        textField.isEditable = false
+        textField:addEventListener( "userInput", textListener )
 
         -- todo関連ボタン作成
         -- type : edit , save
@@ -85,8 +113,8 @@ local function listener()
 
             local function ediitListener( event )
 
-                textBox.isEditable = true
-                textBox.isVisible = true
+                textField.isEditable = true
+                textField.isVisible = true
 
                 print("-------- To do edit -------------")
             end
@@ -96,9 +124,9 @@ local function listener()
                 if event.phase == "ended" then
 
                     -- テキストボックスを透明にする
-                    textBox.isEditable = false
-                    textBox.isVisible = false
-                    textBox.isHitTestable = false
+                    textField.isEditable = false
+                    textField.isVisible = false
+                    textField.isHitTestable = false
 
                     -- 保存されたテキスト表示
                     display.remove(todoText)
@@ -144,7 +172,7 @@ local function listener()
             if event.phase == "began" then
                 
                 -- 編集不可
-                textBox.isEditable = false
+                textField.isEditable = false
 
                 self.markX = self.x    -- store x location of object
                 self.markY = self.y    -- store y location of object
@@ -170,7 +198,7 @@ local function listener()
         local saveBtn = createBtn("btn/btn048_02.png" , "save" , "保存" )
         saveBtn.x ,saveBtn.y = taskCell.x-60 , taskCell.y-105
 
-        todoCellGroup:insert(textBox)
+        todoCellGroup:insert(textField)
         cellGroup:insert(editBtn)
         cellGroup:insert(saveBtn)
         cellGroup:insert(todoCellGroup)

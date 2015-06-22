@@ -27,7 +27,7 @@ local group = display.newGroup()
 function scene:createScene( event )
 	local background = display.newImage(group,"image/todoView.jpeg",_RW/2,_RH/2,true)
 	background:scale(1,2)
-	local task = view.createTask("image/todoCell1.png")
+	local task = view.createTask("image/flame2.png")
 	local menuBtn = menu.createMenuBtn()
 	group:insert(task)
 	group:insert(menuBtn)
@@ -36,8 +36,8 @@ end
 
 function scene:willEnterScene( event )
 	self.view:insert(group)
-	local loadImage = loading( _RW/2 , _RH/2 , 100 , 100 , "image/load.png")
-	self.view:insert(loadImage)
+	-- local loadImage = loading( _RW/2 , _RH/2 , 100 , 100 , "image/load.png")
+	-- self.view:insert(loadImage)
 end
 
 function scene:enterScene( event )

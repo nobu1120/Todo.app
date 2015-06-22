@@ -1,14 +1,14 @@
------------------------------------------
--- 
--- file : main.lua
---
--- creater : Nobuyoshi Tanaka
---
--- comment : Todoアプリを作成
---
------------------------------------------
+------------------------------------------
+--- 
+--- file : main.lua
+---
+--- creater : Nobuyoshi Tanaka
+---
+--- comment : Todoアプリを作成
+---
+------------------------------------------
 
--- library
+--- library
 local library = require("lib")
 local storyboard = require("storyboard")
 
