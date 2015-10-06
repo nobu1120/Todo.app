@@ -35,7 +35,7 @@ function scene:createScene( event )
 end
 
 function scene:willEnterScene( event )
-	self.view:insert(group)
+	-- self.view:insert(group) -- self.view消える
 	-- local loadImage = loading( _RW/2 , _RH/2 , 100 , 100 , "image/load.png")
 	-- self.view:insert(loadImage)
 end

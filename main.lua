@@ -12,4 +12,4 @@
 local library = require("lib")
 local storyboard = require("storyboard")
 
-storyboard.gotoScene("home",{effect = "fromLeft" ,time = 500})
+storyboard.gotoScene("home",{effect="fade",time=500})

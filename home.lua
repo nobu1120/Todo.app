@@ -31,7 +31,7 @@ function scene:createScene( event )
 	    labelColor = { default={ 0.5, 0.3, 0.3 }, over={ 0, 0, 0, 0.5 } },
 	    fontSize = 80,
 	    isEnabled = false,
-	    onEvent = function( event ) storyboard.gotoScene("todo",{ effect = "crossFade" , time = 2000 }) end
+	    onEvent = function( event ) storyboard.gotoScene("todo",{ effect="fade",time=200}) end
 
 	}
 	todoBtn.x , todoBtn.y = _RW/2 - 150 , _RH-420
